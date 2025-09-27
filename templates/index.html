@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Where to go :)</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+  </head>
+  <body>
+    
+  <div class="navbar">
+    <a href="{% url 'places:index'%}">Головна</a>
+    <a href="{% url 'places:places_list'%}">Список місць</a>
+    <a href="{% url 'places:add_place'%}">Додати місце</a>
+  </div>
+
+  <div class="container">
+    <div class="left-block">
+      <h1>Куди піти?</h1>
+      <p>
+        Цей сайт допоможе вам визначити куди Вам треба сьогодні піти.
+        Ми можемо показати вам чудові місця, їх описи та рейтинги.
+        Також ви можете просто переглянути список місць та додати своє улюблене місце
+      </p>
+    </div>
+    <div class="right-block">
+      <button id="random-btn" class="big-button">Куди піти?</button>
+      
+    </div>
+  </div>
+  <div id="result" class="container-res"></div>
+
+  <script>
+      document.getElementById('random-btn').addEventListener('click', async () => {
+      const res = await fetch("{% url 'places:random_place_json' %}");
+      const place = await res.json();
+
+      document.getElementById('result').innerHTML = `
+          <h2>${place.name}</h2>
+          <p>${place.description}</p>
+          <p><strong>Локація:</strong> ${place.location || "Secret place👀"}</p>
+          <p class="rating">${'★'.repeat(place.rating)}</p>
+      `;
+  });
+  </script>
+
+  </body>
+</html>

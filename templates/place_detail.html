@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="uk">
+    <head>
+        <meta charset="UTF-8">
+        <title>Where to go :)</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'detail_styles.css' %}">
+
+    </head>
+    <body>
+    <div class="container">
+        <h1>{{ place.name }}</h1>
+        {%load static%}
+        <img src="{% static 'default.jpg' %}" class="place-image" alt="Фото {{ place.name }}">
+
+        <p>{{ place.description }}</p>
+        <p><strong>Локація:</strong> {{ place.location|default:"Secret place👀" }}</p>
+        <p class="rating">
+            <strong>Рейтинг:</strong> 
+            {% for i in "12345" %}
+            {% if forloop.counter <= place.rating %}★{% endif %}
+        {% endfor %}
+        </p>
+
+        <a href="{% url 'places:places_list' %}" class="back-link">← Назад до списку</a>
+    </div>
+</body>
+</html>
